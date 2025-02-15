@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('/profile', ProfileController::class);
+    Route::get('/profile', [ProfileController::class, 'show']);
 });
 
 

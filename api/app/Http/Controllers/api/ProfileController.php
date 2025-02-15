@@ -37,11 +37,14 @@ class ProfileController extends Controller
      */
     public function show(Request $request)
     {
-       $profile= Profile::find($request->user()->id);
-       if(!empty($profile)){
-        return response()->json(['data'=>$profile],200);
-       }
-        return response()->json(['data'=>[],'msg'=>'No Data'],201);
+        $profile = Profile::where('user_id', $request->user()->id)->first();
+
+        if ($profile) {
+            return response()->json(['data' => $profile], 200);
+        }
+        
+        return response()->json(['data' => null, 'msg' => 'No Data'], 404);
+        
     }
 
     /**
