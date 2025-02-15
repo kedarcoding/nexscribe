@@ -26,3 +26,12 @@ package-lock.json
 public/hot
 *.log
 *.cache
+
+#if frontend not works on git
+
+#rm frontend  # Remove the symlink
+#git rm --cached frontend  # Remove from Git cache
+#mkdir frontend  # Recreate the folder
+#git add frontend
+#git commit -m "Fixed frontend folder issue"
+#git push origin develop  # Or your branch name
