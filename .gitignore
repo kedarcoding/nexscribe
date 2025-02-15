@@ -1,0 +1,28 @@
+# Ignore Node.js dependencies (Next.js frontend)
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
+frontend/.vercel/
+frontend/out/
+
+# Ignore Composer dependencies (Laravel backend)
+api/vendor/
+api/node_modules/
+api/.env
+api/.env.example
+api/storage/
+api/bootstrap/cache/
+
+# General ignore for both
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+npm-debug.log
+yarn-error.log
+package-lock.json
+public/hot
+*.log
+*.cache
