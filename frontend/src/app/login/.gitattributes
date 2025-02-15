@@ -1,0 +1,4 @@
+/laravel-api/* linguist-detectable=true  
+/nextjs-frontend/* linguist-detectable=true  
+*.php linguist-weight=0  
+*.js linguist-weight=10  
