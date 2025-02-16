@@ -41,7 +41,7 @@ class AuthController extends Controller
         ]);
 
         // Find user by email
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('profile')->where('email', $request->email)->first();
 
         // Check password manually
         if (!$user || !Hash::check($request->password, $user->password)) {

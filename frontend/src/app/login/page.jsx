@@ -1,30 +1,33 @@
-// src/app/login/page.jsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext"; // ✅ Import useAuth
 
 export default function Login() {
   const router = useRouter();
+  const { login } = useAuth(); // ✅ Get login function from context
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Reset error state
 
     try {
-      // Replace with your Laravel API endpoint
       const response = await axios.post("http://localhost:8000/api/login", {
         email,
         password,
       });
 
-      // Assume your API returns a token in response.data.token
-      localStorage.setItem("token", response.data.token);
+      const { token, user } = response.data;
 
-      // Redirect to the profile page after successful login
+      // ✅ Store user & token in AuthContext
+      login({ user, token });
+
+      // ✅ Redirect to profile after login
       router.push("/profile");
     } catch (err) {
       console.error(err);
@@ -61,14 +64,15 @@ export default function Login() {
             Login
           </button>
           <div className="mt-4 text-center">
-          <p className="text-gray-600">Don't have an account?</p>
-          <button type="button"
-            onClick={() => router.push("/signup")}
-            className="text-blue-600 underline mt-2"
-          >
-            Sign Up
-          </button>
-        </div>
+            <p className="text-gray-600">Don't have an account?</p>
+            <button
+              type="button"
+              onClick={() => router.push("/signup")}
+              className="text-blue-600 underline mt-2"
+            >
+              Sign Up
+            </button>
+          </div>
         </form>
       </div>
     </div>
