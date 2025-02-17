@@ -9,7 +9,6 @@ export default function Profile() {
       <ProtectedRoute>
       <GuestLayout>
         <div>
-          <h1 className="text-3xl font-bold">Insightssss</h1>
           <InsightComponent/>
         </div>
       </GuestLayout>
