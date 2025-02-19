@@ -21,6 +21,12 @@ Nexscribe is a **full-stack blogging platform** built with **Laravel** (backend)
 - Eloquent ORM (for DB operations)
 - Seeder & Migrations for data population
 
+### **🔹 1. Clone the Repository**
+```bash
+git clone https://github.com/kedarcoding/nexscribe.git
+cd Nexscribe
+
+
 ### **Frontend (Next.js)**
 - Next.js 15 (React 19)
 - Tailwind CSS for styling
@@ -52,7 +58,4 @@ DB_PASSWORD=
 -php artisan migrate --seed
 -php artisan serve
 
-### **🔹 1. Clone the Repository**
-```bash
-git clone https://github.com/kedarcoding/nexscribe.git
-cd BlogHorizon
+
