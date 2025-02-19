@@ -28,9 +28,9 @@ Nexscribe is a **full-stack blogging platform** built with **Laravel** (backend)
 - React Query for data fetching
 
 run command:   1st terminal / commmapt prompt
-cd frontend
-npm install
-npm run dev
+-cd frontend
+-npm install
+-npm run dev
 
 -------------------------------------------------------
 
@@ -46,11 +46,11 @@ DB_DATABASE=nexscibe
 DB_USERNAME=root
 DB_PASSWORD=
 /////////////////run commands
-cd api
-composer install
-php artisan key:generate
-php artisan migrate --seed
-php artisan serve
+-cd api
+-composer install
+-php artisan key:generate
+-php artisan migrate --seed
+-php artisan serve
 
 ### **🔹 1. Clone the Repository**
 ```bash
