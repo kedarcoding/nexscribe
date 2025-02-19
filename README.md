@@ -58,4 +58,4 @@ DB_PASSWORD=
 -php artisan migrate --seed
 -php artisan serve
 
-
+run link on browser for local->    http://localhost:3000
