@@ -33,14 +33,14 @@ cd Nexscribe
 - Axios for API calls
 - React Query for data fetching
 
-run command:   1st terminal / commmapt prompt
+run command:   1st terminal / commmand prompt
 -cd frontend
 -npm install
 -npm run dev
 
 -------------------------------------------------------
 
-## **📌 Installation & Setup**   : use 2nd for commands: terminal / commmapt prompt
+## **📌 Installation & Setup**   : use 2nd for commands: terminal / commmand prompt
 run command:
 -> cp .env.example .env
 
