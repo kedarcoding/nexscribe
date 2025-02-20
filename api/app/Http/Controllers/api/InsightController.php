@@ -11,12 +11,18 @@ class InsightController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $insights=Insight::where(['status'=>1])->get();
+        $search = $request->query('search');
+        $query = Insight::query();
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        } 
+        $insights=$query->where(['status'=>1])->paginate(10);
+
         if(!empty($insights)){
-            return response()->json(['data'=>$insights,'msg'=>'data fetched'],200);
-        }
+            return response()->json($insights,200);
+    }
         return response()->json(['msg'=>'No data'],201);
     }
 

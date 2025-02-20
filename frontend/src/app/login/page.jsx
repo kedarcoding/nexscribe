@@ -1,20 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useAuth } from "@/context/AuthContext"; // ✅ Import useAuth
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const router = useRouter();
-  const { login } = useAuth(); // ✅ Get login function from context
+  const { token, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  // Redirect to profile if already logged in
+  useEffect(() => {
+    if (token) {
+      router.replace("/profile"); // Use replace to prevent going back to login
+    }
+  }, [token, router]);
+
+  // Prevent rendering login form if user is already authenticated
+  if (token) {
+    return null;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error state
+    setError("");
 
     try {
       const response = await axios.post("http://localhost:8000/api/login", {
@@ -24,10 +36,10 @@ export default function Login() {
 
       const { token, user } = response.data;
 
-      // ✅ Store user & token in AuthContext
-      login({ user, token });
+      // Store user & token in AuthContext
+      login(token,user);
 
-      // ✅ Redirect to profile after login
+      // Redirect to profile after login
       router.push("/profile");
     } catch (err) {
       console.error(err);
