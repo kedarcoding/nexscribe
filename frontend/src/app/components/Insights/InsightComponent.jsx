@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { get } from '@/services/api';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData, setPage, setSearchQuery } from "@/redux/features/dataSlice";
+import Head from "next/head";
 
 export default function BlogComponent() {
+
   const [insights, setInsight] = useState({'name':'kedar','name:':'Neha'});
   // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,7 +45,9 @@ export default function BlogComponent() {
   }
 
   return (
+   <div><Head><title>Nexscribe | Insights</title></Head>
    <div className="bg-white p-6 rounded shadow">
+    
       <h2 className="text-xl font-bold mb-2">Insights</h2>
       
       <div className="grid grid-cols-3 gap-8">
@@ -76,6 +80,7 @@ export default function BlogComponent() {
           Next
         </button>
       </div>)}
+  </div>
   </div>
   );
 }
