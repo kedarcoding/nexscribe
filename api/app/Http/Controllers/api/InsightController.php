@@ -18,7 +18,7 @@ class InsightController extends Controller
         if ($search) {
             $query->where('name', 'like', "%{$search}%");
         } 
-        $insights=$query->where(['status'=>1])->paginate(10);
+        $insights=$query->where(['status'=>1])->with('user')->paginate(10);
 
         if(!empty($insights)){
             return response()->json($insights,200);

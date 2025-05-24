@@ -10,10 +10,10 @@ const SideBar=()=>{
 
 return (
 <aside className="overflow-x-hidden text-center bg-gray-200 w-[200px] text-center transition-all duration-300 hover:w-[280px] shadow-lg">
-<ul className="list-none p-4 flex-grow mx-auto h-[92%] overflow-y-auto">
+<ul className="list-none p-4 flex-grow space-y-6 mx-auto h-[92%] overflow-y-auto">
   {sideMenu.map((item, index) => (
     <li key={index} className="mb-4">
-      <Link href={item.url} className="text-blue-600 font-semibold hover:text-green-700">
+      <Link href={item.url} className="text-teal-700 font-semibold hover:text-green-700">
         {item.name}
       </Link>
     </li>

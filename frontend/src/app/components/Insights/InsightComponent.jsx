@@ -6,8 +6,11 @@ import { get } from '@/services/api';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData, setPage, setSearchQuery } from "@/redux/features/dataSlice";
 import Head from "next/head";
+import { Script } from "vm";
 
-export default function BlogComponent() {
+
+
+const  InsightComponent=()=> {
 
   const [insights, setInsight] = useState({'name':'kedar','name:':'Neha'});
   // const [loading, setLoading] = useState(true);
@@ -45,7 +48,11 @@ export default function BlogComponent() {
   }
 
   return (
-   <div><Head><title>Nexscribe | Insights</title></Head>
+   <div>
+
+
+
+
    <div className="bg-white p-6 rounded shadow">
     
       <h2 className="text-xl font-bold mb-2">Insights</h2>
@@ -56,10 +63,11 @@ export default function BlogComponent() {
               <div key={article.id} className="border cursor-pointer transition-transform duration-300 hover:shadow-md hover:scale-105 border-green-300 rounded-lg p-2">
                 <dd className="text-lg font-semibold text-gray-700">{article.title}</dd>
                 <p>{article.content}</p>
+                <dd className="text-gray-800 font-bold mt-2">Author:<span className="text-gray-600 font-bold mx-2">{article.user.name}</span> </dd>
               </div>
             ))
           ) : (
-            <p className="text-gray-500">No insights available</p>
+            <p className="text-gray-500"></p>
           )}
       </div>
       {!loading && (
@@ -84,3 +92,5 @@ export default function BlogComponent() {
   </div>
   );
 }
+
+export default InsightComponent;
