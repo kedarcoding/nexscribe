@@ -53,7 +53,6 @@ const Home = () => {
           <p className="text-gray-700 max-w-2xl mx-auto">
             This is a self-practice project built to sharpen frontend and backend skills.
             It includes modern web development features such as routing, reusable components, and more.
-            Replace this with your real story.
           </p>
         </div>
       </section>
