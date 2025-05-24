@@ -9,7 +9,9 @@ const GuestLayout = ({ children }) => {
       <ReduxProvider>{children}</ReduxProvider>
       </main>
       <footer className="bg-blue-200 p-4">
-        Guest Footer
+        <div className='flex w-full justify-center'>
+         © {new Date().getFullYear()} Kedar-G. All rights reserved.
+         </div>
       </footer>
     </div>
   );
