@@ -7,7 +7,7 @@ const Navbar = () => {
   const { authUser, logout } = useAuth();
 
   return (
-    <nav className="fixed z-99 text-lg top-0 w-full bg-blue-600 p-4 flex justify-between items-center">
+    <nav className="fixed top-0 left-0 w-full z-[9999] bg-blue-600 p-4 flex justify-between items-center">
       <ul className="flex space-x-8 px-4">
         <li><Link href="/home" className="text-white hover:text-gray-400">Home</Link></li>
         <li><Link href="/insights" className="text-white hover:text-gray-400">Insights</Link></li>
