@@ -8,7 +8,7 @@ export default function Profile() {
     <ProtectedRoute>
     <GuestLayout>
       <div>
-        <h1 className="text-3xl font-bold">Your Profile</h1>
+        <h1 className="text-3xl text-gray-600 font-bold mt-10">Profile: </h1>
         <ProfilePage/>
       </div>
     </GuestLayout>

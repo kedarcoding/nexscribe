@@ -22,7 +22,7 @@ export default function ProfilePage() {
   // if (loading) return <p className="text-center text-gray-500">Loading...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-4xl bg-slate-50 mx-auto mt-10 p-6 bg-white shadow-lg border-2 border-green-100 hover:border-green-200 cursor-pointer rounded-lg hover:shadow-md transition-all duration-300ms">
       <h2 className="text-2xl font-semibold text-gray-700">Profile</h2>
       <div className="mt-4 space-y-6">
         <p><span className="font-medium text-gray-600">Name:</span> {profile?.name || "N/A"}</p>
