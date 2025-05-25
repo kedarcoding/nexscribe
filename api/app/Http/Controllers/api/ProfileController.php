@@ -37,6 +37,7 @@ class ProfileController extends Controller
      */
     public function show(Request $request)
     {
+        return  $request->user()->load('profile');
         $profile = Profile::where('user_id', $request->user()->id)->first();
 
         if ($profile) {
@@ -58,9 +59,30 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+    public function update(Request $request)
     {
-        //
+        $userId = $request->user()->id;
+
+        $data = [
+            'user_id'     => $userId,
+            'address'     => $request->address,
+            'postal_code' => $request->postcode,
+            'bio'         => $request->bio,
+            'dob'         => $request->dob,
+            'gender'      => $request->gender,
+        ];
+
+        $profile = Profile::updateOrCreate(
+            ['user_id' => $userId], // condition to find
+            $data                      // data to update or insert
+        );
+
+        if ($profile) {
+            return response()->json(['data' => $profile], 200);
+        }
+
+    return response()->json(['data' => null, 'msg' => 'Profile update failed'], 500);
     }
 
     /**

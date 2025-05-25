@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -11,36 +11,51 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("authUser");
-    const storedToken = localStorage.getItem("token");
+    try {
+      const storedUser = localStorage.getItem("authUser");
+      const storedToken = localStorage.getItem("token");
 
-    if (storedUser) setAuthUser(JSON.parse(storedUser));
-    if (storedToken) setToken(JSON.parse(storedToken));
+      if (storedUser) {
+        setAuthUser(JSON.parse(storedUser));
+      }
+
+      if (storedToken) {
+        setToken(storedToken); // Don't parse, it's already a plain string
+      }
+    } catch (error) {
+      console.error("Failed to parse auth data from localStorage:", error);
+      localStorage.removeItem("authUser");
+      localStorage.removeItem("token");
+      setAuthUser(null);
+      setToken(null);
+    }
   }, []);
 
-  const setAuthDataInCookies = (token, user) => {
-    // Store user and token in localStorage
+  const setAuthData = (token, user) => {
+    // Save to state
+    setAuthUser(user);
+    setToken(token);
+console.log(token);
+    // Save to localStorage
     localStorage.setItem("authUser", JSON.stringify(user));
-    localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("token", token); // Save token as plain string
 
-    // Store the token in cookies for server-side access
-    document.cookie = `authToken=${token}; path=/; max-age=3600`; // 1 hour expiry
-    document.cookie = `userRole=${user.role}; path=/; max-age=3600`; // Store user role in cookie
+    // Save to cookies (optional, only if needed for SSR)
+    document.cookie = `authToken=${token}; path=/; max-age=3600`; // 1 hour
+    document.cookie = `userRole=${user.role}; path=/; max-age=3600`;
   };
 
   const login = (token, user) => {
-    setAuthDataInCookies(token, user);
-    setAuthUser(user);
-    setToken(token);
+    setAuthData(token, user);
     router.push("/profile");
   };
 
   const logout = () => {
-    // Clear both localStorage and cookies
     localStorage.removeItem("authUser");
     localStorage.removeItem("token");
-    document.cookie = "authToken=; path=/; max-age=0"; // Remove token cookie
-    document.cookie = "userRole=; path=/; max-age=0"; // Remove role cookie
+
+    document.cookie = "authToken=; path=/; max-age=0";
+    document.cookie = "userRole=; path=/; max-age=0";
 
     setAuthUser(null);
     setToken(null);

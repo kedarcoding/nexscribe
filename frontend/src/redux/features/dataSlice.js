@@ -1,14 +1,11 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// redux/features/dataSlice.js
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { get } from "@/services/api"; // your custom one, not plain axios
 
-// Async Thunk for Fetching Paginated Data
 export const fetchData = createAsyncThunk(
   "data/fetchData",
   async ({ page, search }) => {
-    const response = await axios.get(
-      `http://localhost:8000/api/insights?page=${page}&search=${search}`
-    );
-
+    const response = await get(`/insights?page=${page}&search=${search}`);
     return response.data;
   }
 );
@@ -35,6 +32,7 @@ const dataSlice = createSlice({
     builder
       .addCase(fetchData.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.loading = false;

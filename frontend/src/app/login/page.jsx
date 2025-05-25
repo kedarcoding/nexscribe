@@ -10,19 +10,30 @@ export default function Login() {
   const { token, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
 
-  // Redirect to profile if already logged in
+  // Load remembered credentials
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedPassword = localStorage.getItem("rememberedPassword");
+    const rememberFlag = localStorage.getItem("rememberMe");
+
+    if (rememberFlag === "true") {
+      setEmail(savedEmail || "");
+      setPassword(savedPassword || "");
+      setRememberMe(true);
+    }
+  }, []);
+
+  // Redirect if already logged in
   useEffect(() => {
     if (token) {
-      router.replace("/profile"); // Use replace to prevent going back to login
+      router.replace("/profile");
     }
   }, [token, router]);
 
-  // Prevent rendering login form if user is already authenticated
-  if (token) {
-    return null;
-  }
+  if (token) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,10 +47,18 @@ export default function Login() {
 
       const { token, user } = response.data;
 
-      // Store user & token in AuthContext
-      login(token,user);
+      // Store credentials if "Remember Me" is checked
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", email);
+        localStorage.setItem("rememberedPassword", password); // ⚠️ Not secure — avoid in real apps
+        localStorage.setItem("rememberMe", "true");
+      } else {
+        localStorage.removeItem("rememberedEmail");
+        localStorage.removeItem("rememberedPassword");
+        localStorage.removeItem("rememberMe");
+      }
 
-      // Redirect to profile after login
+      login(token, user);
       router.push("/profile");
     } catch (err) {
       console.error(err);
@@ -69,12 +88,24 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             className="border p-2 mb-4 w-full"
           />
+
+          <label className="flex items-center mb-4">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="mr-2"
+            />
+            Remember Me
+          </label>
+
           <button
             type="submit"
             className="bg-blue-600 text-white p-2 rounded w-full"
           >
             Login
           </button>
+
           <div className="mt-4 text-center">
             <p className="text-gray-600">Don't have an account?</p>
             <button
