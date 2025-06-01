@@ -1,4 +1,5 @@
 "use client";
+
 import { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,7 +8,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [token, setToken] = useState(null);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       if (storedToken) {
-        setToken(storedToken); // Don't parse, it's already a plain string
+        setToken(storedToken);
       }
     } catch (error) {
       console.error("Failed to parse auth data from localStorage:", error);
@@ -32,16 +32,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const setAuthData = (token, user) => {
-    // Save to state
     setAuthUser(user);
     setToken(token);
-console.log(token);
-    // Save to localStorage
-    localStorage.setItem("authUser", JSON.stringify(user));
-    localStorage.setItem("token", token); // Save token as plain string
 
-    // Save to cookies (optional, only if needed for SSR)
-    document.cookie = `authToken=${token}; path=/; max-age=3600`; // 1 hour
+    localStorage.setItem("authUser", JSON.stringify(user));
+    localStorage.setItem("token", token);
+
+    // Optional cookies
+    document.cookie = `authToken=${token}; path=/; max-age=3600`;
     document.cookie = `userRole=${user.role}; path=/; max-age=3600`;
   };
 
@@ -62,8 +60,13 @@ console.log(token);
     router.push("/login");
   };
 
+  const setUser = (user) => {
+    setAuthUser(user);
+    localStorage.setItem("authUser", JSON.stringify(user));
+  };
+
   return (
-    <AuthContext.Provider value={{ authUser, token, login, logout }}>
+    <AuthContext.Provider value={{ authUser, token, login, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );

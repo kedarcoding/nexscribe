@@ -59,7 +59,7 @@ class AuthController extends Controller
         }
 
         // Check if the user exists and the password is correct
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->with('profile')->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([

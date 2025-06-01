@@ -16,7 +16,7 @@ export default function ProfilePage() {
     dob: "",
   });
 
-  const { authUser } = useAuth();
+  const { authUser, setUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -43,20 +43,22 @@ export default function ProfilePage() {
 
   const handleSave = async () => {
     try {
-      await put("/profile/update", formData);
+      const res = await put("/profile/update", formData);
 
-      setProfile((prev) => ({
-        ...prev,
+      const updatedUser = {
+        ...authUser,
         name: formData.name,
         email: formData.email,
         profile: {
-          ...prev.profile,
+          ...authUser.profile,
           bio: formData.bio,
           gender: formData.gender,
           dob: formData.dob,
         },
-      }));
+      };
 
+      setProfile(updatedUser);
+      setUser(updatedUser); // ✅ updates localStorage and context state
       setEditable(false);
     } catch (error) {
       console.error("Failed to update profile:", error);
